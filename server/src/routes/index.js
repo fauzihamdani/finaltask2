@@ -1,0 +1,54 @@
+const express = require('express');
+const router = express.Router();
+const { authenticated } = require('../middlewares/auth');
+const { uploadFile } = require('../middlewares/upload');
+
+const {
+   getUser,
+   registerUser,
+   deleteUser,
+   login,
+   getUserById,
+   checkAuth,
+   getUserProfile,
+   updateUser,
+} = require('../controllers/user');
+
+const { addArtist } = require('../controllers/artist');
+const { addMusic, getMusic } = require('../controllers/music');
+const {
+   addTransaction,
+   getTransactions,
+} = require('../controllers/transaction');
+
+// user api
+// router.get('/users', getUser);
+// router.get('/user-by-id/:id', authenticated, getUserById);
+router.post('/login', login);
+router.post('/register', registerUser);
+// router.delete('/user/:id', authenticated, deleteUser);
+// router.patch(
+//    '/user/:iduser',
+//    authenticated,
+//    uploadFile('fileUpload'),
+//    updateUser
+// );
+// router.get('/check-auth', authenticated, checkAuth);
+
+// //  Artist
+router.post('/artist', authenticated, addArtist);
+
+// //  Artist
+router.post(
+   '/music',
+   authenticated,
+   uploadFile([{ name: 'thumbnail' }, { name: 'attache' }]),
+   addMusic
+);
+router.get('/musics', authenticated, getMusic);
+
+// Transaction
+router.post('/transaction', authenticated, addTransaction);
+router.get('/transactions', authenticated, getTransactions);
+
+module.exports = router;

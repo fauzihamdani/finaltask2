@@ -1,0 +1,26 @@
+.add-artist-wrapper {
+}
+
+.form-wrapper {
+   margin-top: 5rem;
+   width: 100%;
+}
+
+.add-artist-button-wrapper {
+   height: 4rem;
+   display: flex;
+   justify-content: center;
+}
+
+.add-artist-button {
+   width: 45rem;
+   height: 100%;
+   background-color: var(--secondary-color);
+   border-radius: 1rem;
+}
+
+.add-artist-button-title {
+   font-size: 2rem;
+   color: White;
+   font-weight: bold;
+}

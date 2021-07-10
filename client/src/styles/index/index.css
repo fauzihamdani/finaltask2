@@ -1,0 +1,98 @@
+.index-header-wrapper {
+   background-image: url('../../assets/dumbsound.png');
+   background-repeat: no-repeat;
+   background-size: cover;
+   height: 60rem;
+}
+
+.title-index-wrapper {
+   margin-top: 13rem;
+   /* background-color: red; */
+   display: flex;
+   justify-content: center;
+}
+
+.title-1 {
+   font-size: 5rem;
+   color: white;
+   margin-bottom: 3rem;
+}
+
+.title-index-wrapper2 {
+   margin-top: 2rem;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+.title-2 {
+   font-size: 2rem;
+   color: white;
+   letter-spacing: 0.3rem;
+}
+
+.title-3 {
+   font-size: 2rem;
+   color: white;
+   margin-bottom: 3rem;
+   letter-spacing: 0.3rem;
+}
+
+.song-list {
+   padding: 2rem;
+}
+
+.dumb-sound-tagline {
+   margin: 5rem 0;
+   display: flex;
+   justify-content: center;
+}
+
+.dumb-sound-tagline-text {
+   color: #ee4622;
+   font-size: 3rem;
+   font-weight: bold;
+}
+.songs-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 1.5rem;
+   justify-content: space-around;
+}
+
+.song-item-list {
+   width: 23rem;
+   height: 28rem;
+   background-color: #3a3a3a;
+   border-radius: 1rem;
+   border-bottom: 1.5rem;
+   padding: 1.2rem;
+}
+
+.song-image-cover {
+   height: 18rem;
+   background-color: red;
+}
+
+.title-year-wrapper {
+   /* margin-top: 1rem; */
+   padding-top: 1rem;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   font-weight: bold;
+}
+
+.title-text {
+   font-size: 1.5rem;
+   color: white;
+}
+
+.year-text {
+   font-size: 1.3rem;
+   color: white;
+}
+
+.artistname-wrapper {
+   padding-bottom: 1rem;
+}
