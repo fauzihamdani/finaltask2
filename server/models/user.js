@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
          address: DataTypes.STRING,
          isAdmin: DataTypes.BOOLEAN,
          subscribe: DataTypes.STRING,
+         photoprofile: DataTypes.STRING,
       },
       {
          sequelize,

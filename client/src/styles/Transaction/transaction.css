@@ -1,0 +1,64 @@
+.transaction-title-wrapper {
+   margin-bottom: 7rem;
+   /* background-color: red; */
+}
+
+.transaction-table-wrapper {
+   width: 100%;
+}
+
+table,
+th,
+td {
+   width: 100%;
+   border: 1px solid black;
+}
+
+.background-dropdown-item {
+   background-color: #3a3a3a;
+   font-size: 2rem;
+}
+
+.dropdown-style {
+   border: transparent;
+   outline: transparent;
+   background-color: transparent;
+   font-size: 2rem;
+}
+.dropdown-style:active {
+   border: transparent;
+   outline: transparent;
+   background-color: transparent;
+}
+
+.dropdown-style:focus {
+   border: transparent;
+   outline: transparent;
+   background-color: transparent;
+}
+
+.dropdown-style:hover {
+   background-color: transparent;
+   outline: transparent;
+   border: transparent;
+}
+
+.dropdown-style:focus {
+   background-color: transparent;
+   outline: transparent;
+   border: transparent;
+}
+
+.dropdown-style:active {
+   background-color: transparent;
+   outline: transparent;
+   border: transparent;
+}
+
+.dropdown-item1 {
+   color: #0acf83;
+}
+
+.dropdown-item2 {
+   color: #ff0000;
+}

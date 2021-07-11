@@ -43,6 +43,9 @@ module.exports = {
             allowNull: false,
             type: Sequelize.DATE,
          },
+         photoprofile: {
+            type: Sequelize.STRING,
+         },
       });
    },
    down: async (queryInterface, Sequelize) => {

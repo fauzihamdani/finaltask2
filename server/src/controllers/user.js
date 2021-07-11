@@ -35,7 +35,6 @@ exports.registerUser = async (req, res) => {
          password: Joi.string().min(3).max(100).required(),
          fullname: Joi.string().min(3).max(50).required(),
          password: Joi.string().min(3).max(50).required(),
-         listAs: Joi.string().min(0).max(50).required(),
          gender: Joi.string().min(3).max(50).required(),
          phone: Joi.string().min(3).max(50).required(),
          address: Joi.string().min(3).max(50).required(),
@@ -74,6 +73,8 @@ exports.registerUser = async (req, res) => {
          phone: req.body.phone,
          address: req.body.address,
          isAdmin: req.body.isAdmin,
+         subcribe: '',
+         photoprofile: 'photo-pp.jpg',
       });
       console.log('tes here');
       const secretKey = 'asdf1234';

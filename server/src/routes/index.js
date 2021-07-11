@@ -33,9 +33,10 @@ router.post('/register', registerUser);
 //    uploadFile('fileUpload'),
 //    updateUser
 // );
-// router.get('/check-auth', authenticated, checkAuth);
+router.get('/check-auth', authenticated, checkAuth);
 
-// //  Artist
+//  Artist
+router.get('/artist', authenticated, addArtist);
 router.post('/artist', authenticated, addArtist);
 
 // //  Artist
@@ -45,7 +46,7 @@ router.post(
    uploadFile([{ name: 'thumbnail' }, { name: 'attache' }]),
    addMusic
 );
-router.get('/musics', authenticated, getMusic);
+router.get('/musics', getMusic);
 
 // Transaction
 router.post('/transaction', authenticated, addTransaction);

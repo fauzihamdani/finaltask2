@@ -1,10 +1,64 @@
+import { useState, useEffect, useContext } from 'react';
 import '../styles/index/index.css';
 import NavbarUser from '../components/navbarUser/NavbarUser';
 import coverSong from '../assets/song cover.png';
+import AuthContext from '../contexts/auth/authContext';
+import { useHistory } from 'react-router';
+import { API, setAuthToken } from '../config/api';
+import ReactJkMusicPlayer from 'react-jinke-music-player';
+import 'react-jinke-music-player/assets/index.css';
+import HealTheWorld from '../mp3/1626019336412-MichaelJackson  Heal The World Official Video.mp3';
 
 function Index() {
+   const history = useHistory();
+   const [songs, setSongs] = useState(null);
+   const [songList, setSongList] = useState(null);
+   const [loading, setLoading] = useState(true);
+
+   const authContext = useContext(AuthContext);
+   const { isLogin, logout, userData, loadUser, isAdmin } = authContext;
+
+   const getSongs = async () => {
+      const config = {
+         headers: {
+            'Content-Type': 'application/json',
+         },
+      };
+      const response = await API.get('/musics', config);
+      setSongs(response.data.data.music);
+      // setSongList([{ ...response.data.data.music.attache }]);
+      setLoading(false);
+   };
+
+   useEffect(() => {
+      loadUser();
+      if (isLogin === false) {
+         history.push('/');
+      } else {
+         if (userData && userData?.isAdmin === false) {
+            history.push('/home');
+         } else if (userData && userData?.isAdmin === true) {
+            history.push('/transactions');
+         }
+      }
+   }, [isLogin, isAdmin]);
+
+   useEffect(() => {
+      getSongs();
+   }, []);
+
+   if (localStorage.token) {
+      setAuthToken(localStorage.token);
+   }
    return (
       <div>
+         <ReactJkMusicPlayer
+            audioLists={[
+               {
+                  src: '../mp3/1626019336412-MichaelJackson  Heal The World Official Video.mp3',
+               },
+            ]}
+         />
          <div className="index-header-wrapper">
             <NavbarUser />
             <div className="title-index-wrapper">
@@ -21,7 +75,6 @@ function Index() {
                </p>
             </div>
          </div>
-
          <div className="song-list container__">
             <div className="dumb-sound-tagline">
                <p className="dumb-sound-tagline-text">Dengarkan dan Rasakan</p>
@@ -45,7 +98,32 @@ function Index() {
                      <p className="title-text">Artist name here</p>
                   </div>
                </div>
+               {songs?.map((song) => (
+                  <div className="song-item-list clicked button-a">
+                     <div className="song-image-cover">
+                        <img
+                           src={`http://localhost:5000/uploads/${song.thumbnail}`}
+                           alt=""
+                           srcset=""
+                           className="image-size-100"
+                        />
+                     </div>
+                     <div className="title-year-wrapper">
+                        <p className="title-text">{song.title}</p>
+                        <p className="year-text">{song.year}</p>
+                     </div>
+                     <div className="artistname-wrapper">
+                        <p className="title-text">{song.artist.name}</p>
+                     </div>
+                  </div>
+               ))}
             </div>
+         </div>
+         <div>
+            <pre style={{ color: 'white', fontSize: '2.5rem' }}>
+               {/* {JSON.stringify(songList, 2, 4)} */}
+               {JSON.stringify(songs, 2, 4)}
+            </pre>
          </div>
       </div>
    );

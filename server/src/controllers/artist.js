@@ -1,7 +1,21 @@
-const { Artist } = require('../../models/');
+const { Artist, User } = require('../../models/');
 
 exports.addArtist = async (req, res) => {
    try {
+      // Check if isAdmin-=-=-=-=-=-=-=-
+      const { id } = req.user;
+      console.log(id);
+      const validateAdmin = await User.findOne({ where: { id: id } });
+
+      if (validateAdmin.isAdmin === false) {
+         return res.send({
+            status: 'failed',
+            message: 'You have no authorization to do this',
+         });
+      }
+      // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+      //
+      //
       const { body } = req;
       console.log('response body', body);
       //   const idUser = req.user.id;
@@ -32,6 +46,34 @@ exports.addArtist = async (req, res) => {
       //      where: { id: artist.id },
       //   });
 
+      res.send({
+         status: 'success',
+         data: {
+            artist: artist,
+         },
+      });
+   } catch (error) {
+      console.log(error);
+   }
+};
+
+exports.getArtist = async (req, res) => {
+   // Check if isAdmin-=-=-=-=-=-=-=-
+   const { id } = req.user;
+   console.log(id);
+   const validateAdmin = await User.findOne({ where: { id: id } });
+
+   if (validateAdmin.isAdmin === false) {
+      return res.send({
+         status: 'failed',
+         message: 'You have no authorization to do this',
+      });
+   }
+   // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+   //
+   //
+   try {
+      const artist = await Artist.findAll();
       res.send({
          status: 'success',
          data: {

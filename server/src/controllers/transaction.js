@@ -3,16 +3,16 @@ const { User, Transaction } = require('../../models/');
 exports.addTransaction = async (req, res) => {
    try {
       // Check if isAdmin-=-=-=-=-=-=-=-
-      const { id } = req.user;
-      console.log(id);
-      const validateAdmin = await User.findOne({ where: { id: id } });
+      // const { id } = req.user;
+      // console.log(id);
+      // const validateAdmin = await User.findOne({ where: { id: id } });
 
-      if (validateAdmin.isAdmin === false) {
-         return res.send({
-            status: 'failed',
-            message: 'You have no authorization to do this',
-         });
-      }
+      // if (validateAdmin.isAdmin === false) {
+      //    return res.send({
+      //       status: 'failed',
+      //       message: 'You have no authorization to do this',
+      //    });
+      // }
       // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       //
       //

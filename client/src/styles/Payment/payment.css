@@ -1,0 +1,44 @@
+.title-wrapper {
+   display: flex;
+   justify-content: center;
+   margin-bottom: 7rem;
+}
+
+.title-wrapper-2 {
+   display: flex;
+   justify-content: center;
+}
+
+.text-1 {
+   color: white;
+   font-size: 2rem;
+}
+
+.payment-code-wrapper {
+   display: flex;
+   justify-content: center;
+   margin-bottom: 7rem;
+}
+
+.form-wrapper {
+   width: 23vw;
+   margin: 0 auto;
+}
+
+.send-payment {
+   display: flex;
+   justify-content: center;
+   height: 4.5rem;
+   margin-top: 6rem;
+}
+
+.send-payment-text-button {
+   width: 100%;
+   border-radius: 1rem;
+   background-color: #f58033;
+}
+
+.send-payment-text {
+   font-size: 2.5rem;
+   color: white;
+}

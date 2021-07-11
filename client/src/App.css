@@ -178,3 +178,105 @@ a:visited {
    outline: none !important;
    border: none !important;
 }
+
+/* dropdown style */
+
+.background-dropdown-item {
+   background-color: #3a3a3a;
+   font-size: 2rem;
+}
+
+.dropdown-style {
+   border: transparent !important;
+   outline: transparent !important;
+   background-color: transparent !important;
+   font-size: 2rem;
+}
+.dropdown-style:active {
+   border: transparent !important;
+   outline: transparent !important;
+   background-color: transparent !important;
+}
+
+.dropdown-style:focus {
+   border: transparent !important;
+   outline: transparent !important;
+   background-color: transparent !important;
+}
+
+.dropdown-style:hover {
+   background-color: transparent !important;
+   outline: transparent !important;
+   border: transparent !important;
+}
+
+.dropdown-style:focus {
+   background-color: transparent !important;
+   outline: transparent !important;
+   border: transparent !important;
+}
+
+.dropdown-style:active {
+   background-color: transparent !important;
+   outline: transparent !important;
+   border: transparent !important;
+}
+
+/* modal register login styling */
+.modal-background {
+   background-color: #161616;
+}
+
+.login {
+   padding: 4rem 2.5rem;
+   /* border-radius: 5px; */
+}
+
+.login input {
+   width: 100%;
+   height: 4rem;
+   font-size: 2rem;
+   border-radius: 5px;
+   background-color: var(--input-color);
+   margin-bottom: 3rem;
+   padding: 1rem;
+   border: white 1px solid;
+   color: white;
+}
+
+.login input:focus {
+   border-color: #d2d2d2 !important;
+   outline: 0;
+}
+
+.login select {
+   width: 100%;
+   height: 4rem;
+   font-size: 1.8rem;
+   border-radius: 5px;
+   background-color: var(--input-color);
+   margin-bottom: 3rem;
+   padding: 1rem;
+   border: white 1px solid;
+   color: white;
+}
+
+.login select:focus {
+   border-color: #d2d2d2 !important;
+   outline: 0;
+}
+
+.submit-login {
+   margin-top: 1.5rem;
+   background-color: #ee4622;
+   height: 4rem;
+   font-weight: bold;
+   border-radius: 5px;
+   font-size: 1.8rem;
+   color: white;
+   display: flex;
+}
+
+.submit-login p {
+   margin: auto;
+}
