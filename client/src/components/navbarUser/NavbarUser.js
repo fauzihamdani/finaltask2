@@ -51,13 +51,18 @@ function Navbar() {
    return isLogin ? (
       <div className="navbar_">
          <div className="navbar-container">
-            <div className="container-dumbsound">
-               <img className="dumbsound-img-size" src={dumbSound} />
-            </div>
+            <Link to="/home">
+               <div className="container-dumbsound clicked">
+                  <img className="dumbsound-img-size" src={dumbSound} />
+               </div>
+            </Link>
             <Dropdown bsPrefix="dropdown-style">
                <Dropdown.Toggle bsPrefix="dropdown-style" id="dropdown-basic">
                   <div className="container-pp bg-image-colorfull">
-                     <img className="image-size-100-rounded" src={pp} />
+                     <img
+                        className="image-size-100-rounded"
+                        src={`http://localhost:5000/uploads/${userData.photoprofile}`}
+                     />
                   </div>
                </Dropdown.Toggle>
                <Dropdown.Menu bsPrefix="background-dropdown-item">

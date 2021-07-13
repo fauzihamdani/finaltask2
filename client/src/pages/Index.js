@@ -1,22 +1,34 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, createRef } from 'react';
 import '../styles/index/index.css';
 import NavbarUser from '../components/navbarUser/NavbarUser';
 import coverSong from '../assets/song cover.png';
 import AuthContext from '../contexts/auth/authContext';
 import { useHistory } from 'react-router';
 import { API, setAuthToken } from '../config/api';
-import ReactJkMusicPlayer from 'react-jinke-music-player';
-import 'react-jinke-music-player/assets/index.css';
-import HealTheWorld from '../mp3/1626019336412-MichaelJackson  Heal The World Official Video.mp3';
+import MusicPlayer from '../components/musicPlayer/MusicPlayer';
 
 function Index() {
    const history = useHistory();
    const [songs, setSongs] = useState(null);
    const [songList, setSongList] = useState(null);
    const [loading, setLoading] = useState(true);
+   const [mid, setMid] = useState();
+   const [visibleMusic, setVisibleMusic] = useState(false);
+   const musicRef = createRef();
+   const path = 'http://localhost:5000/uploads/';
 
    const authContext = useContext(AuthContext);
    const { isLogin, logout, userData, loadUser, isAdmin } = authContext;
+
+   const onClickMusic = (mid) => {
+      if (visibleMusic) {
+         setMid(mid);
+         setVisibleMusic(false);
+         setTimeout(() => setVisibleMusic(true), 500);
+      } else {
+         setVisibleMusic(true);
+      }
+   };
 
    const getSongs = async () => {
       const config = {
@@ -26,7 +38,13 @@ function Index() {
       };
       const response = await API.get('/musics', config);
       setSongs(response.data.data.music);
-      // setSongList([{ ...response.data.data.music.attache }]);
+      const list = response?.data.data.music.map((musicItem) => ({
+         name: musicItem.title,
+         singer: musicItem.artist.name,
+         cover: `http://localhost:5000/uploads/${musicItem.thumbnail}`,
+         musicSrc: path + musicItem.attache,
+      }));
+      setSongList(list);
       setLoading(false);
    };
 
@@ -50,15 +68,10 @@ function Index() {
    if (localStorage.token) {
       setAuthToken(localStorage.token);
    }
-   return (
+   return loading ? (
+      <div>Loading ...</div>
+   ) : (
       <div>
-         <ReactJkMusicPlayer
-            audioLists={[
-               {
-                  src: '../mp3/1626019336412-MichaelJackson  Heal The World Official Video.mp3',
-               },
-            ]}
-         />
          <div className="index-header-wrapper">
             <NavbarUser />
             <div className="title-index-wrapper">
@@ -98,8 +111,12 @@ function Index() {
                      <p className="title-text">Artist name here</p>
                   </div>
                </div>
-               {songs?.map((song) => (
-                  <div className="song-item-list clicked button-a">
+               {songs?.map((song, index) => (
+                  <div
+                     className="song-item-list clicked button-a"
+                     key={index}
+                     onClick={() => onClickMusic(song.id)}
+                  >
                      <div className="song-image-cover">
                         <img
                            src={`http://localhost:5000/uploads/${song.thumbnail}`}
@@ -119,12 +136,23 @@ function Index() {
                ))}
             </div>
          </div>
-         <div>
+         {/* <div>
             <pre style={{ color: 'white', fontSize: '2.5rem' }}>
-               {/* {JSON.stringify(songList, 2, 4)} */}
+               {JSON.stringify(songList, 2, 4)}
                {JSON.stringify(songs, 2, 4)}
             </pre>
-         </div>
+         </div> */}
+         <MusicPlayer
+            visibleMusic={visibleMusic}
+            setVisibleMusic={setVisibleMusic}
+            audioLists={songList}
+            options={{
+               playIndex: mid,
+               showDownload: false,
+               mode: 'full',
+               showThemeSwitch: false,
+            }}
+         />
       </div>
    );
 }

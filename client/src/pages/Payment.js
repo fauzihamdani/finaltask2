@@ -1,7 +1,53 @@
+import { useState, useEffect } from 'react';
 import NavbarUser from '../components/navbarUser/NavbarUser';
 import '../styles/Payment/payment.css';
 import { FaPaperclip } from 'react-icons/fa';
+import { API } from '../config/api';
 function Payment() {
+   //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= form Input Music=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
+   const [formPayment, setFormPayment] = useState({
+      accountnumber: '',
+      attachment: '',
+   });
+   const { accountnumber, attachment } = formPayment;
+   // const [preview, setPreview] = useState('');
+   //
+   //
+   //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= onchange & State Music input controller=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
+   const onChangeInputPayment = (e) => {
+      const updatePostForm = { ...formPayment };
+      updatePostForm[e.target.name] =
+         e.target.type === 'file' ? e.target.files : e.target.value;
+      setFormPayment(updatePostForm);
+      // if (e.target.type === 'file') {
+      //    let url = URL.createObjectURL(e.target.files[0]);
+      //    setPreview(url);
+      // }
+   };
+   // *
+   // *
+   //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=Submit Payment=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
+   const submitAddPayment = async () => {
+      console.log('form-payment', formPayment.attachment);
+      const formData = new FormData();
+      // formData.set('thumbnail', thumbnail);
+      formData.set(
+         'attachment',
+         formPayment.attachment[0],
+         formPayment.attachment[0].name
+      );
+      try {
+         const config = {
+            headers: {
+               'Content-type': 'multipart/form-data',
+            },
+         };
+         await API.post(`/transaction`, formData, config);
+         // setFormPayment({
+         //    attachment: '',
+         // });
+      } catch (err) {}
+   };
    return (
       <div>
          <NavbarUser />
@@ -26,21 +72,32 @@ function Payment() {
                </p>
             </div>
             <div className="form-wrapper">
-               <form>
+               <form
+                  onSubmit={(e) => {
+                     submitAddPayment();
+                     e.preventDefault();
+                  }}
+               >
                   <input
                      type="text"
-                     name="year"
+                     name="accountnumber"
                      id=""
-                     placeholder="Year"
+                     placeholder="Account Number"
                      className="form-design"
                      style={{ height: '5rem' }}
+                     onChange={(e) => {
+                        onChangeInputPayment(e);
+                     }}
                   />
 
                   <input
                      type="file"
-                     name="attache"
+                     name="attachment"
                      id="img"
                      style={{ display: 'none' }}
+                     onChange={(e) => {
+                        onChangeInputPayment(e);
+                     }}
                   />
 
                   <label

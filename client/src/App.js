@@ -28,7 +28,7 @@ if (localStorage.token) {
 
 function App() {
    const authContext = useContext(AuthContext);
-   const { loadUser } = authContext;
+   const { loadUser, userData } = authContext;
 
    useEffect(() => {
       loadUser();
@@ -40,13 +40,21 @@ function App() {
             <Switch>
                <Route path="/" component={Index} exact />
                <PrivateRoute path="/home" component={Index} exact />
-               <PrivateRoute
+               <PrivateRouteAdmin
                   path="/transactions"
                   component={Transaction}
                   exact
                />
-               <PrivateRoute path="/add-artist" component={AddArtist} exact />
-               <PrivateRoute path="/add-music" component={AddMusic} exact />
+               <PrivateRouteAdmin
+                  path="/add-artist"
+                  component={AddArtist}
+                  exact
+               />
+               <PrivateRouteAdmin
+                  path="/add-music"
+                  component={AddMusic}
+                  exact
+               />
                <PrivateRoute path="/payment" component={Payment} exact />
             </Switch>
          </Router>

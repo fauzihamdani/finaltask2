@@ -26,41 +26,40 @@ exports.addTransaction = async (req, res) => {
       //
       //
       // check if the userid is exist in user table-=-=--=-=-
-      const checkIsUserExist = await User.findOne({
-         where: { id: req.body.userId },
-      });
+      // const checkIsUserExist = await User.findOne({
+      //    where: { id: req.body.userId },
+      // });
 
-      if (!checkIsUserExist) {
-         return res.send({
-            status: 'failed',
-            message: 'Id doesnt exist',
-         });
-      }
+      // if (!checkIsUserExist) {
+      //    return res.send({
+      //       status: 'failed',
+      //       message: 'Id doesnt exist',
+      //    });
+      // }
       // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       //
       //
       // check if the userid is exist in tansaction table-=-=--=-=-
-      const checkTransaction = await Transaction.findOne({
-         where: { userId: req.body.userId },
-      });
-      if (checkTransaction) {
-         return res.send({
-            status: 'failed',
-            message: 'User Already registered as a premium user',
-         });
-      }
+      // const checkTransaction = await Transaction.findOne({
+      //    where: { userId: req.body.userId },
+      // });
+      // if (checkTransaction) {
+      //    return res.send({
+      //       status: 'failed',
+      //       message: 'User Already registered as a premium user',
+      //    });
+      // }
       // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       //
       //
       // create data into Transaction Table=-=-=-=-=-
       const transaction = await Transaction.create({
-         attachment: req.body.attachment,
+         attachment: req.files.attachment[0].filename,
          startDate: startDate,
          dueDate: dueDate,
-         user_status: req.body.user_status,
-         payment_status: req.body.payment_status,
-         action: req.body.action,
-         userId: req.body.userId,
+         user_status: 'Active',
+         payment_status: 'Pending',
+         userId: req.user.id,
       });
       // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       //
@@ -78,9 +77,12 @@ exports.addTransaction = async (req, res) => {
 
 exports.getTransactions = async (req, res) => {
    try {
+      console.log('hi!');
       const { id } = req.user;
       console.log(id);
-      const validateAdmin = await User.findOne({ where: { id: id } });
+      const validateAdmin = await User.findOne({
+         where: { id: id },
+      });
 
       if (validateAdmin.isAdmin === false) {
          return res.send({
@@ -89,7 +91,17 @@ exports.getTransactions = async (req, res) => {
          });
       }
 
-      const transactions = await Transaction.findAll();
+      const transactions = await Transaction.findAll({
+         include: [
+            {
+               model: User,
+               attributes: {
+                  exclude: ['createdAt', 'updatedAt', 'password'],
+               },
+               as: 'user',
+            },
+         ],
+      });
 
       // calculation remaining days
       const daysRemain = (startDate, dueDate) => {
@@ -112,20 +124,22 @@ exports.getTransactions = async (req, res) => {
          action: transaction.action,
          userId: transaction.userId,
          daysRemaining: daysRemain(transaction.startDate, transaction.dueDate),
+         user: transaction.user,
       }));
       res.send({
          status: 'success',
          data: {
-            transaction: transactionsFinal,
+            transactions: transactionsFinal,
          },
       });
    } catch (error) {}
 };
 
 exports.updateTransaction = async (req, res) => {
-   const { id } = req.user;
-   console.log(id);
-   const validateAdmin = await User.findOne({ where: { id: id } });
+   const { body } = req;
+   const { idTransaction } = req.params;
+   console.log('body================>|||', req.body, idTransaction);
+   const validateAdmin = await User.findOne({ where: { id: req.user.id } });
 
    if (validateAdmin.isAdmin === false) {
       return res.send({
@@ -134,9 +148,21 @@ exports.updateTransaction = async (req, res) => {
       });
    }
    try {
+      const checkId = await Transaction.findOne({
+         where: {
+            id: idTransaction,
+         },
+      });
+      if (!checkId) {
+         return res.send({
+            status: 'failed',
+            message: `Transaction id not Found`,
+         });
+      }
+
       const updatedUser = await Transaction.update(body, {
          where: {
-            id: req.body.id,
+            id: idTransaction,
          },
       });
 

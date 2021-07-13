@@ -14,11 +14,12 @@ const {
    updateUser,
 } = require('../controllers/user');
 
-const { addArtist } = require('../controllers/artist');
+const { addArtist, getArtist } = require('../controllers/artist');
 const { addMusic, getMusic } = require('../controllers/music');
 const {
    addTransaction,
    getTransactions,
+   updateTransaction,
 } = require('../controllers/transaction');
 
 // user api
@@ -36,7 +37,7 @@ router.post('/register', registerUser);
 router.get('/check-auth', authenticated, checkAuth);
 
 //  Artist
-router.get('/artist', authenticated, addArtist);
+router.get('/artist', authenticated, getArtist);
 router.post('/artist', authenticated, addArtist);
 
 // //  Artist
@@ -49,7 +50,23 @@ router.post(
 router.get('/musics', getMusic);
 
 // Transaction
-router.post('/transaction', authenticated, addTransaction);
-router.get('/transactions', authenticated, getTransactions);
+router.post(
+   '/transaction',
+   authenticated,
+   uploadFile([{ name: 'attachment' }]),
+   addTransaction
+);
+router.get(
+   '/transactions',
+   authenticated,
+
+   getTransactions
+);
+router.patch(
+   '/transaction/:idTransaction',
+   authenticated,
+
+   updateTransaction
+);
 
 module.exports = router;

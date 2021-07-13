@@ -35,7 +35,7 @@ exports.addArtist = async (req, res) => {
          name: req.body.name,
          old: req.body.old,
          type: req.body.type,
-         startcareer: req.body.startCareer,
+         startcareer: req.body.startcareer,
       });
 
       //   const getLike = await Like.findAll({
@@ -73,11 +73,11 @@ exports.getArtist = async (req, res) => {
    //
    //
    try {
-      const artist = await Artist.findAll();
+      const artists = await Artist.findAll();
       res.send({
          status: 'success',
          data: {
-            artist: artist,
+            artists: artists,
          },
       });
    } catch (error) {
