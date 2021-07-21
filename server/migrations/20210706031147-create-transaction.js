@@ -14,6 +14,9 @@ module.exports = {
          startDate: {
             type: Sequelize.DATE,
          },
+         lastLoginDate: {
+            type: Sequelize.DATE,
+         },
          dueDate: {
             type: Sequelize.DATE,
          },

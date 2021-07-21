@@ -32,7 +32,7 @@ const AuthState = (children) => {
          }
          dispatch({
             type: 'USER_LOADED',
-            payload: response.data.data.user,
+            payload: response?.data?.data?.user,
          });
       } catch (err) {
          dispatch({ type: 'AUTH_ERROR' });
@@ -53,7 +53,7 @@ const AuthState = (children) => {
          }
          dispatch({
             type: 'GET_USER_INFO',
-            payload: response.data.data.user,
+            payload: response?.data?.data?.user,
          });
       } catch (err) {
          dispatch({ type: 'AUTH_ERROR' });
@@ -72,7 +72,7 @@ const AuthState = (children) => {
 
          const input = dispatch({
             type: 'LOGIN_SUCCESS',
-            payload: res.data.data.user,
+            payload: res?.data?.data?.user,
          });
          if (input) loadUser();
       } catch (err) {

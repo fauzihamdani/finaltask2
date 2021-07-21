@@ -39,7 +39,7 @@ function App() {
          <Router>
             <Switch>
                <Route path="/" component={Index} exact />
-               <PrivateRoute path="/home" component={Index} exact />
+               <PrivateRoute path="/home" component={Home} exact />
                <PrivateRouteAdmin
                   path="/transactions"
                   component={Transaction}

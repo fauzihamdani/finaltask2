@@ -52,27 +52,55 @@ exports.addMusic = async (req, res) => {
 };
 
 exports.getMusic = async (req, res) => {
+   const genre = req.query.genre;
+
+   console.log(genre);
+
    try {
-      const music = await Music.findAll({
-         include: [
-            {
-               model: Artist,
-               attributes: {
-                  exclude: ['createdAt', 'updatedAt'],
+      if (genre) {
+         const music = await Music.findAll({
+            where: { genre: genre },
+            include: [
+               {
+                  model: Artist,
+                  attributes: {
+                     exclude: ['createdAt', 'updatedAt'],
+                  },
+                  as: 'artist',
                },
-               as: 'artist',
+            ],
+            attributes: {
+               exclude: ['createdAt', 'updatedAt', 'artistId'],
             },
-         ],
-         attributes: {
-            exclude: ['createdAt', 'updatedAt', 'artistId'],
-         },
-      });
-      res.send({
-         status: 'success',
-         data: {
-            music: music,
-         },
-      });
+         });
+         return res.send({
+            status: 'success',
+            data: {
+               music: music,
+            },
+         });
+      } else if (!genre) {
+         const music = await Music.findAll({
+            include: [
+               {
+                  model: Artist,
+                  attributes: {
+                     exclude: ['createdAt', 'updatedAt'],
+                  },
+                  as: 'artist',
+               },
+            ],
+            attributes: {
+               exclude: ['createdAt', 'updatedAt', 'artistId'],
+            },
+         });
+         res.send({
+            status: 'success',
+            data: {
+               music: music,
+            },
+         });
+      }
    } catch (error) {
       console.log(error);
    }

@@ -20,6 +20,7 @@ const {
    addTransaction,
    getTransactions,
    updateTransaction,
+   getTransactionById,
 } = require('../controllers/transaction');
 
 // user api
@@ -61,6 +62,12 @@ router.get(
    authenticated,
 
    getTransactions
+);
+router.get(
+   '/transactions-by-id/:id',
+   authenticated,
+
+   getTransactionById
 );
 router.patch(
    '/transaction/:idTransaction',

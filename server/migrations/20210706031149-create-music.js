@@ -30,6 +30,9 @@ module.exports = {
          attache: {
             type: Sequelize.STRING,
          },
+         genre: {
+            type: Sequelize.STRING,
+         },
          createdAt: {
             allowNull: false,
             type: Sequelize.DATE,

@@ -3,7 +3,9 @@ import Navbar from '../components/navbar/Navbar';
 import '../styles/Add Artist/addArtist.css';
 import '../styles/addMusic/addMusic.css';
 import { API } from '../config/api';
+import { useHistory } from 'react-router';
 function AddMusic() {
+   const history = useHistory();
    //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= form Input Music=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
    const [formMusics, setFormMusics] = useState({
       title: '',
@@ -81,6 +83,7 @@ function AddMusic() {
             artistId: '',
             attache: '',
          });
+         history.push('/transactions');
       } catch (err) {}
    };
    return (

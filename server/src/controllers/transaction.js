@@ -56,8 +56,9 @@ exports.addTransaction = async (req, res) => {
       const transaction = await Transaction.create({
          attachment: req.files.attachment[0].filename,
          startDate: startDate,
+         lastLoginDate: startDate,
          dueDate: dueDate,
-         user_status: 'Active',
+         user_status: 'Inactive',
          payment_status: 'Pending',
          userId: req.user.id,
       });
@@ -107,23 +108,25 @@ exports.getTransactions = async (req, res) => {
       const daysRemain = (startDate, dueDate) => {
          const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
          const firstDate = new Date(startDate);
-         const seconDate = new Date(dueDate);
-         const diffDays = Math.round(
-            Math.abs((firstDate - seconDate) / oneDay)
-         );
-         return diffDays;
+         const secondDate = new Date(dueDate);
+         const diffDays = Math.round((secondDate - firstDate) / oneDay);
+         return diffDays < 0 ? 0 : diffDays;
       };
 
       const transactionsFinal = transactions.map((transaction) => ({
          id: transaction.id,
          attachment: transaction.attachment,
          startDate: transaction.startDate,
+         lastLoginDate: transaction.lastLoginDate,
          dueDate: transaction.dueDate,
          user_status: transaction.user_status,
          payment_status: transaction.payment_status,
          action: transaction.action,
          userId: transaction.userId,
-         daysRemaining: daysRemain(transaction.startDate, transaction.dueDate),
+         daysRemaining: daysRemain(
+            transaction.lastLoginDate,
+            transaction.dueDate
+         ),
          user: transaction.user,
       }));
       res.send({
@@ -185,4 +188,44 @@ exports.updateTransaction = async (req, res) => {
          message: 'Server Error',
       });
    }
+};
+
+exports.getTransactionById = async (req, res) => {
+   // Validate isAdmin =-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+   //
+   //
+   const { id } = req.params;
+   // const { body } = req;
+   // const { idTransaction } = req.params;
+   // console.log('body================>|||', req.body, idTransaction);
+   // const validateAdmin = await User.findOne({ where: { id: req.user.id } });
+   // if (validateAdmin.isAdmin === false) {
+   //    return res.send({
+   //       status: 'failed',
+   //       message: 'You have no authorization to do this',
+   //    });
+   // }
+   //
+   //
+   //  =-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= =-=-=-=-=--=-=-=
+   const transactions = await Transaction.findAll({
+      where: { userId: id },
+      include: [
+         {
+            model: User,
+            attributes: {
+               exclude: ['createdAt', 'updatedAt', 'password'],
+            },
+            as: 'user',
+         },
+      ],
+   });
+   const transactionsLength = transactions.length;
+   res.send({
+      status: 'success',
+      message: 'User Succesfully updated',
+      data: {
+         transactions: transactions[transactionsLength - 1],
+      },
+   });
 };

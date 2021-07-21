@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
          thumbnail: DataTypes.STRING,
          artistId: DataTypes.INTEGER,
          attache: DataTypes.STRING,
+         genre: DataTypes.STRING,
       },
       {
          sequelize,

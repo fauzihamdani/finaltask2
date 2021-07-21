@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       {
          attachment: DataTypes.STRING,
          startDate: DataTypes.DATE,
+         lastLoginDate: DataTypes.DATE,
          dueDate: DataTypes.DATE,
          user_status: DataTypes.STRING,
          payment_status: DataTypes.STRING,

@@ -1,5 +1,7 @@
-Get All Artist Api
+filter by genre
 
-restrictions song title + artist name
+remaining days
 
-edit transaction
+validation form
+
+validation when pay

@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import Navbar from '../components/navbar/Navbar';
 import '../styles/Add Artist/addArtist.css';
 import { API, setAuthToken } from '../config/api';
+import { useHistory } from 'react-router';
 function AddArtist() {
+   const history = useHistory();
    //=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= onchange & State Artist input controller=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
    const [formArtist, setFormArtist] = useState({
       name: '',
@@ -31,7 +33,9 @@ function AddArtist() {
          startcareer,
       });
       const postArtist = await API.post('artist', body, config);
+
       setFormArtist({ name: '', old: '', type: '', startcareer: '' });
+      history.push('/transactions');
    };
 
    return (
@@ -83,6 +87,7 @@ function AddArtist() {
                      <option value="select type">Select Type</option>
                      <option value="Solo">Solo</option>
                      <option value="Group">Group</option>
+                     <option value="As a Garbage">As a Garbage</option>
                   </select>
 
                   <input

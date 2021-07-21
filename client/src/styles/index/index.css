@@ -96,3 +96,22 @@
 .artistname-wrapper {
    padding-bottom: 1rem;
 }
+
+.filter-genre-button-wrapper {
+   height: 4rem;
+   display: flex;
+   justify-content: center;
+}
+
+.filter-genre-button {
+   width: 25rem;
+   height: 100%;
+   background-color: var(--secondary-color);
+   border-radius: 1rem;
+}
+
+.filter-genre-button-title {
+   font-size: 2rem;
+   color: White;
+   font-weight: bold;
+}

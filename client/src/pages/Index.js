@@ -14,12 +14,14 @@ function Index() {
    const [loading, setLoading] = useState(true);
    const [mid, setMid] = useState();
    const [visibleMusic, setVisibleMusic] = useState(false);
+   const [dataTransaction, setDataTransaction] = useState(false);
    const musicRef = createRef();
    const path = 'http://localhost:5000/uploads/';
 
    const authContext = useContext(AuthContext);
    const { isLogin, logout, userData, loadUser, isAdmin } = authContext;
 
+   //  Music Player onClick =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
    const onClickMusic = (mid) => {
       if (visibleMusic) {
          setMid(mid);
@@ -29,7 +31,7 @@ function Index() {
          setVisibleMusic(true);
       }
    };
-
+   //  =-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=
    const getSongs = async () => {
       const config = {
          headers: {
@@ -38,32 +40,53 @@ function Index() {
       };
       const response = await API.get('/musics', config);
       setSongs(response.data.data.music);
-      const list = response?.data.data.music.map((musicItem) => ({
+      const list = response?.data?.data?.music?.map((musicItem) => ({
          name: musicItem.title,
          singer: musicItem.artist.name,
          cover: `http://localhost:5000/uploads/${musicItem.thumbnail}`,
          musicSrc: path + musicItem.attache,
       }));
       setSongList(list);
-      setLoading(false);
    };
-
-   useEffect(() => {
+   //  Get Transaction =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
+   const [getTransactionLoading, setGetTransactionLoading] = useState(true);
+   const getTransactions = async () => {
+      const config = {
+         headers: {
+            'Content-Type': 'application/json',
+         },
+      };
+      const response = await API.get(
+         `/transactions-by-id/${userData?.id}`,
+         config
+      );
+      setDataTransaction(response?.data?.data?.transactions);
+      setGetTransactionLoading(true);
+   };
+   //  =-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=
+   const checkIsLogin = () => {
       loadUser();
       if (isLogin === false) {
          history.push('/');
-      } else {
+      } else if (isLogin === true) {
          if (userData && userData?.isAdmin === false) {
             history.push('/home');
          } else if (userData && userData?.isAdmin === true) {
             history.push('/transactions');
          }
       }
-   }, [isLogin, isAdmin]);
+   };
 
    useEffect(() => {
+      checkIsLogin();
       getSongs();
-   }, []);
+      getTransactions();
+      setLoading(false);
+   }, [isLogin, isAdmin]);
+
+   // useEffect(() => {
+
+   // }, []);
 
    if (localStorage.token) {
       setAuthToken(localStorage.token);
@@ -94,46 +117,62 @@ function Index() {
             </div>
 
             <div className="songs-wrapper">
-               <div className="song-item-list clicked button-a">
-                  <div className="song-image-cover">
-                     <img
-                        src={coverSong}
-                        alt=""
-                        srcset=""
-                        className="image-size-100"
-                     />
+               {isLogin ? (
+                  dataTransaction?.user_status !== 'Active' ? (
+                     // getTransactionLoading ? (<div>Loading ....</div>) : ()
+                     songs?.slice(0, 2).map((song, index) => (
+                        <div
+                           className="song-item-list clicked button-a"
+                           key={index}
+                           onClick={() => onClickMusic(song.id)}
+                        >
+                           <div className="song-image-cover">
+                              <img
+                                 src={`http://localhost:5000/uploads/${song.thumbnail}`}
+                                 alt=""
+                                 srcset=""
+                                 className="image-size-100"
+                              />
+                           </div>
+                           <div className="title-year-wrapper">
+                              <p className="title-text">{song.title}</p>
+                              <p className="year-text">{song.year}</p>
+                           </div>
+                           <div className="artistname-wrapper">
+                              <p className="title-text">{song.artist.name}</p>
+                           </div>
+                        </div>
+                     ))
+                  ) : (
+                     songs?.map((song, index) => (
+                        <div
+                           className="song-item-list clicked button-a"
+                           key={index}
+                           onClick={() => onClickMusic(song.id)}
+                        >
+                           <div className="song-image-cover">
+                              <img
+                                 src={`http://localhost:5000/uploads/${song.thumbnail}`}
+                                 alt=""
+                                 srcset=""
+                                 className="image-size-100"
+                              />
+                           </div>
+                           <div className="title-year-wrapper">
+                              <p className="title-text">{song.title}</p>
+                              <p className="year-text">{song.year}</p>
+                           </div>
+                           <div className="artistname-wrapper">
+                              <p className="title-text">{song.artist.name}</p>
+                           </div>
+                        </div>
+                     ))
+                  )
+               ) : (
+                  <div style={{ color: 'white', fontSize: '2rem' }}>
+                     Login or Register to enjoy our Songs
                   </div>
-                  <div className="title-year-wrapper">
-                     <p className="title-text">Title Here</p>
-                     <p className="year-text">2019</p>
-                  </div>
-                  <div className="artistname-wrapper">
-                     <p className="title-text">Artist name here</p>
-                  </div>
-               </div>
-               {songs?.map((song, index) => (
-                  <div
-                     className="song-item-list clicked button-a"
-                     key={index}
-                     onClick={() => onClickMusic(song.id)}
-                  >
-                     <div className="song-image-cover">
-                        <img
-                           src={`http://localhost:5000/uploads/${song.thumbnail}`}
-                           alt=""
-                           srcset=""
-                           className="image-size-100"
-                        />
-                     </div>
-                     <div className="title-year-wrapper">
-                        <p className="title-text">{song.title}</p>
-                        <p className="year-text">{song.year}</p>
-                     </div>
-                     <div className="artistname-wrapper">
-                        <p className="title-text">{song.artist.name}</p>
-                     </div>
-                  </div>
-               ))}
+               )}
             </div>
          </div>
          {/* <div>

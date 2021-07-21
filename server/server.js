@@ -3,8 +3,15 @@ const router = require('./src/routes/index');
 
 const app = express();
 var cors = require('cors');
+const schedule = require('node-schedule');
+const { updatedDateTransactions } = require('./utilsServer/updatedDate');
 
 const port = 5000;
+
+schedule.scheduleJob('0 0 * * *', () => {
+   updatedDateTransactions();
+   // console.log('running scheduler..');
+});
 
 app.use(express.json());
 app.use(cors());
