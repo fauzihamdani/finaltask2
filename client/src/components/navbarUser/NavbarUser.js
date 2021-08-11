@@ -9,6 +9,8 @@ import { Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 import AuthContext from '../../contexts/auth/authContext';
 import { Link } from 'react-router-dom';
+import payIcon from '../../assets/payIcon.svg';
+import logoutIcon from '../../assets/logoutIcon.svg';
 
 function Navbar() {
    const history = useHistory();
@@ -79,9 +81,19 @@ function Navbar() {
                               display: 'flex',
                               // justifyContent: 'center',
                               fontWeight: 'bold',
+                              gap: '1rem',
+                              backgroundColor: '#3a3a3a',
                            }}
                         >
-                           Pay
+                           <div>
+                              <img
+                                 style={{ width: '2rem' }}
+                                 src={payIcon}
+                                 alt=""
+                                 srcset=""
+                              />
+                           </div>
+                           <div> Pay</div>
                         </Dropdown.Item>
                      </Link>
                   </div>
@@ -96,9 +108,19 @@ function Navbar() {
                            display: 'flex',
                            // justifyContent: 'center',
                            fontWeight: 'bold',
+                           gap: '1rem',
+                           backgroundColor: '#3a3a3a',
                         }}
                      >
-                        Logout
+                        <div>
+                           <img
+                              style={{ width: '2rem' }}
+                              src={logoutIcon}
+                              alt=""
+                              srcset=""
+                           />
+                        </div>
+                        <div> Logout</div>
                      </Dropdown.Item>
                   </div>
                </Dropdown.Menu>

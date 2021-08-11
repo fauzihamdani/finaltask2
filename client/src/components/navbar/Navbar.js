@@ -6,6 +6,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import AuthContext from '../../contexts/auth/authContext';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import logoutIcon from '../../assets/logoutIcon.svg';
+import addArtis from '../../assets/addartis.svg';
+import addMusic from '../../assets/addmusic.svg';
 
 function Navbar() {
    const history = useHistory();
@@ -62,9 +65,19 @@ function Navbar() {
                               width: '20rem',
                               display: 'flex',
                               justifyContent: 'center',
+                              gap: '1rem',
+                              backgroundColor: '#3a3a3a',
                            }}
                         >
-                           Add Music
+                           <div>
+                              <img
+                                 style={{ width: '2rem' }}
+                                 src={addMusic}
+                                 alt=""
+                                 srcset=""
+                              />
+                           </div>
+                           <div> Add Music</div>
                         </Dropdown.Item>
                      </Link>
                   </div>
@@ -78,9 +91,19 @@ function Navbar() {
                               marginBottom: '1.5rem',
                               display: 'flex',
                               justifyContent: 'center',
+                              gap: '1rem',
+                              backgroundColor: '#3a3a3a',
                            }}
                         >
-                           Add Artist
+                           <div>
+                              <img
+                                 style={{ width: '2rem' }}
+                                 src={addArtis}
+                                 alt=""
+                                 srcset=""
+                              />
+                           </div>
+                           <div> Add Artist</div>
                         </Dropdown.Item>
                      </Link>
                   </div>
@@ -94,9 +117,20 @@ function Navbar() {
                            marginBottom: '1.5rem',
                            display: 'flex',
                            justifyContent: 'center',
+                           alignItems: 'center',
+                           gap: '1rem',
+                           backgroundColor: '#3a3a3a',
                         }}
                      >
-                        Logout
+                        <div>
+                           <img
+                              style={{ width: '2rem' }}
+                              src={logoutIcon}
+                              alt=""
+                              srcset=""
+                           />
+                        </div>
+                        <div> Logout</div>
                      </Dropdown.Item>
                   </div>
                </Dropdown.Menu>

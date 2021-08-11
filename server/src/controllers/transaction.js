@@ -3,7 +3,7 @@ const { User, Transaction } = require('../../models/');
 exports.addTransaction = async (req, res) => {
    try {
       // Check if isAdmin-=-=-=-=-=-=-=-
-      // const { id } = req.user;
+      const { id } = req.user;
       // console.log(id);
       // const validateAdmin = await User.findOne({ where: { id: id } });
 
@@ -17,6 +17,7 @@ exports.addTransaction = async (req, res) => {
       //
       //
       // prepared some variable / value in order to save data into transaction table
+      console.log('hitting add transaction');
       const { body } = req;
       console.log('response body', body);
       var startDate = new Date();
@@ -26,29 +27,30 @@ exports.addTransaction = async (req, res) => {
       //
       //
       // check if the userid is exist in user table-=-=--=-=-
-      // const checkIsUserExist = await User.findOne({
-      //    where: { id: req.body.userId },
-      // });
+      const checkIsUserExist = await User.findOne({
+         where: { id: id },
+      });
 
-      // if (!checkIsUserExist) {
-      //    return res.send({
-      //       status: 'failed',
-      //       message: 'Id doesnt exist',
-      //    });
-      // }
+      if (!checkIsUserExist) {
+         return res.send({
+            status: 'failed',
+            message: 'Id doesnt exist',
+         });
+      }
       // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       //
       //
       // check if the userid is exist in tansaction table-=-=--=-=-
-      // const checkTransaction = await Transaction.findOne({
-      //    where: { userId: req.body.userId },
-      // });
-      // if (checkTransaction) {
-      //    return res.send({
-      //       status: 'failed',
-      //       message: 'User Already registered as a premium user',
-      //    });
-      // }
+      const checkTransaction = await Transaction.findOne({
+         where: { userId: id },
+      });
+      if (checkTransaction) {
+         console.log('User Already registered as a premium user');
+         return res.send({
+            status: 'failed',
+            message: 'User Already registered as a premium user',
+         });
+      }
       // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
       //
       //

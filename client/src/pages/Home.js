@@ -109,7 +109,7 @@ function Index() {
             'Content-Type': 'application/json',
          },
       };
-      if (genre === 'All Music') {
+      if (genre === 'All Music' || genre === 'Select Genre') {
          const response = await API.get(`/musics`, config);
          setSongs(response?.data?.data?.music);
          const list = response?.data?.data?.music?.map((musicItem) => ({
@@ -209,7 +209,7 @@ function Index() {
                         onChangeInputGenre(e);
                      }}
                   >
-                     <option value="Select Artist">Select Genre</option>
+                     <option value="Select Genre">Select Genre</option>
                      <option value="Rock">Rock</option>
                      <option value="Pop">Pop</option>
                      <option value="Blues">Blues</option>
@@ -227,7 +227,7 @@ function Index() {
 
             <div className="songs-wrapper">
                {isLogin ? (
-                  dataTransaction?.user_status !== 'Active' ? (
+                  dataTransaction?.payment_status !== 'Approved' ? (
                      // getTransactionLoading ? (<div>Loading ....</div>) : ()
                      songs?.slice(0, 2).map((song, index) => (
                         <div

@@ -8,10 +8,10 @@ const { updatedDateTransactions } = require('./utilsServer/updatedDate');
 
 const port = 5000;
 
-schedule.scheduleJob('*/2 * * * * *', () => {
-   updatedDateTransactions();
-   console.log('running scheduler..');
-});
+// schedule.scheduleJob('*/4 * * * * *', () => {
+//    // updatedDateTransactions();
+//    console.log('running scheduler..');
+// });
 
 app.use(express.json());
 app.use(cors());
