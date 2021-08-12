@@ -41,14 +41,19 @@ exports.addTransaction = async (req, res) => {
       //
       //
       // check if the userid is exist in tansaction table-=-=--=-=-
-      const checkTransaction = await Transaction.findOne({
+      const checkTransaction = await Transaction.findAll({
          where: { userId: id },
       });
-      if (checkTransaction) {
+      const asPremiumUser = checkTransaction.length;
+      console.log(
+         '==========================>',
+         checkTransaction[asPremiumUser - 1]
+      );
+      if (checkTransaction[asPremiumUser - 1].payment_status === 'Approved') {
          console.log('User Already registered as a premium user');
          return res.send({
             status: 'failed',
-            message: 'User Already registered as a premium user',
+            message: 'You Have been Already registered as a premium user',
          });
       }
       // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

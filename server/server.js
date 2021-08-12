@@ -5,13 +5,14 @@ const app = express();
 var cors = require('cors');
 const schedule = require('node-schedule');
 const { updatedDateTransactions } = require('./utilsServer/updatedDate');
+const { updatedPaymentStatus } = require('./utilsServer/updatePaymentStatus');
 
 const port = 5000;
 
-// schedule.scheduleJob('*/4 * * * * *', () => {
-//    // updatedDateTransactions();
-//    console.log('running scheduler..');
-// });
+schedule.scheduleJob('*/4 * * * * *', () => {
+   updatedDateTransactions();
+   console.log('running scheduler..');
+});
 
 app.use(express.json());
 app.use(cors());
