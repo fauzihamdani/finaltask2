@@ -39,17 +39,17 @@ function Index() {
          },
       };
       const response = await API.get('/musics', config);
-      setSongs(response.data.data.music);
+      setSongs(response.data?.data.music);
       const list = response?.data?.data?.music?.map((musicItem) => ({
-         name: musicItem.title,
-         singer: musicItem.artist.name,
+         name: musicItem?.title,
+         singer: musicItem?.artist?.name,
          cover: `http://localhost:5000/uploads/${musicItem.thumbnail}`,
          musicSrc: path + musicItem.attache,
       }));
       setSongList(list);
    };
    //  Get Transaction =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
-   const [getTransactionLoading, setGetTransactionLoading] = useState(true);
+   const [transactionLoading, setTransactionLoading] = useState(false);
    const getTransactions = async () => {
       const config = {
          headers: {
@@ -61,28 +61,41 @@ function Index() {
          config
       );
       setDataTransaction(response?.data?.data?.transactions);
-      setGetTransactionLoading(true);
+      setTransactionLoading(true);
    };
    //  =-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=
-   const checkIsLogin = () => {
+   // const checkIsLogin = () => {
+   //    loadUser();
+   //    if (isLogin) {
+   //       if (userData && userData?.isAdmin === false) {
+   //          history.push('/home');
+   //       } else if (userData && userData?.isAdmin === true) {
+   //          history.push('/transactions');
+   //       }
+   //    } else {
+   //       history.push('/');
+   //    }
+   // };
+
+   useEffect(() => {
       loadUser();
-      if (isLogin === false) {
-         history.push('/');
-      } else if (isLogin === true) {
+      if (isLogin == true) {
          if (userData && userData?.isAdmin === false) {
             history.push('/home');
          } else if (userData && userData?.isAdmin === true) {
             history.push('/transactions');
          }
+      } else {
+         history.push('/');
       }
-   };
+   }, [isLogin, userData?.isAdmin]);
 
    useEffect(() => {
-      checkIsLogin();
-      getSongs();
       getTransactions();
       setLoading(false);
-   }, [isLogin, isAdmin]);
+      // checkIsLogin();
+      getSongs();
+   }, []);
 
    // useEffect(() => {
 
@@ -117,62 +130,9 @@ function Index() {
             </div>
 
             <div className="songs-wrapper">
-               {isLogin ? (
-                  dataTransaction?.user_status !== 'Active' ? (
-                     // getTransactionLoading ? (<div>Loading ....</div>) : ()
-                     songs?.slice(0, 2).map((song, index) => (
-                        <div
-                           className="song-item-list clicked button-a"
-                           key={index}
-                           onClick={() => onClickMusic(song.id)}
-                        >
-                           <div className="song-image-cover">
-                              <img
-                                 src={`http://localhost:5000/uploads/${song.thumbnail}`}
-                                 alt=""
-                                 srcset=""
-                                 className="image-size-100"
-                              />
-                           </div>
-                           <div className="title-year-wrapper">
-                              <p className="title-text">{song.title}</p>
-                              <p className="year-text">{song.year}</p>
-                           </div>
-                           <div className="artistname-wrapper">
-                              <p className="title-text">{song.artist.name}</p>
-                           </div>
-                        </div>
-                     ))
-                  ) : (
-                     songs?.map((song, index) => (
-                        <div
-                           className="song-item-list clicked button-a"
-                           key={index}
-                           onClick={() => onClickMusic(song.id)}
-                        >
-                           <div className="song-image-cover">
-                              <img
-                                 src={`http://localhost:5000/uploads/${song.thumbnail}`}
-                                 alt=""
-                                 srcset=""
-                                 className="image-size-100"
-                              />
-                           </div>
-                           <div className="title-year-wrapper">
-                              <p className="title-text">{song.title}</p>
-                              <p className="year-text">{song.year}</p>
-                           </div>
-                           <div className="artistname-wrapper">
-                              <p className="title-text">{song.artist.name}</p>
-                           </div>
-                        </div>
-                     ))
-                  )
-               ) : (
-                  <div style={{ color: 'white', fontSize: '2rem' }}>
-                     Login or Register to enjoy our Songs
-                  </div>
-               )}
+               <div style={{ color: 'white', fontSize: '2rem' }}>
+                  Login or Register to enjoy our Songs
+               </div>
             </div>
          </div>
          {/* <div>

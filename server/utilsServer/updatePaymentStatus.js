@@ -18,7 +18,7 @@ exports.updatedPaymentStatus = async () => {
          transaction.dueDate
       );
 
-      if (resultDaysremain === 8) {
+      if (resultDaysremain === 7) {
          await Transaction.update(
             { payment_status: 'Cancel' },
             {
@@ -29,6 +29,4 @@ exports.updatedPaymentStatus = async () => {
          );
       }
    });
-
-   console.log(lastLoginDate.toString());
 };

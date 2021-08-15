@@ -10,8 +10,9 @@ const { updatedPaymentStatus } = require('./utilsServer/updatePaymentStatus');
 const port = 5000;
 
 schedule.scheduleJob('*/4 * * * * *', () => {
-   updatedDateTransactions();
-   console.log('running scheduler..');
+   // updatedDateTransactions();
+   // updatedPaymentStatus();
+   // console.log('running scheduler..');
 });
 
 app.use(express.json());

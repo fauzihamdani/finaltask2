@@ -1,5 +1,5 @@
 const { User } = require('../../models/');
-
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
@@ -77,7 +77,7 @@ exports.registerUser = async (req, res) => {
          photoprofile: 'photo-pp.jpg',
       });
       console.log('tes here');
-      const secretKey = 'asdf1234';
+      const secretKey = process.env.SECRET_KEY;
       const token = jwt.sign(
          {
             id: user.id,
@@ -145,7 +145,7 @@ exports.login = async (req, res) => {
          });
       }
 
-      const secretKey = 'asdf1234';
+      const secretKey = process.env.SECRET_KEY;
       const token = jwt.sign(
          {
             id: checkEmail.id,

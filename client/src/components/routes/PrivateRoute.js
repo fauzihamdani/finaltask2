@@ -5,13 +5,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
    // const { state: userState } = useContext(UserContext);
 
    const authContext = useContext(AuthContext);
-   const { isLogin, loading } = authContext;
+   const { isLogin, loading, userData } = authContext;
 
    return (
       <Route
          {...rest}
          render={(props) =>
-            isLogin ? <Component {...props} /> : <Redirect to="/" />
+            isLogin && userData.isAdmin === false ? (
+               <Component {...props} />
+            ) : (
+               <Redirect to="/" />
+            )
          }
       />
    );

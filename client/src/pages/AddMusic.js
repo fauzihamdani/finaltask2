@@ -13,8 +13,9 @@ function AddMusic() {
       year: '',
       artistId: '',
       attache: '',
+      genre: '',
    });
-   const { title, thumbnail, year, artistId, attache } = formMusics;
+   const { title, thumbnail, year, artistId, attache, genre } = formMusics;
    const [preview, setPreview] = useState('');
    //
    //
@@ -69,6 +70,7 @@ function AddMusic() {
          formMusics.attache[0],
          formMusics.attache[0].name
       );
+      formData.set('genre', genre);
       try {
          const config = {
             headers: {
@@ -177,6 +179,22 @@ function AddMusic() {
                         ))}
                      </select>
 
+                     <select
+                        name="genre"
+                        id="genre"
+                        className="form-design-select"
+                        onChange={(e) => {
+                           onChangeInputMusics(e);
+                        }}
+                     >
+                        <option value="Singer">Select Genre</option>
+
+                        <option value="Rock">Rock</option>
+                        <option value="Blues">Blues</option>
+                        <option value="Pop">Pop</option>
+                        <option value="Pop">Others</option>
+                     </select>
+
                      <input
                         type="file"
                         name="attache"
@@ -202,7 +220,7 @@ function AddMusic() {
                      <div className="add-artist-button-wrapper">
                         <div className="null"></div>
                         <button type="submit" className="add-artist-button">
-                           <p className="add-artist-button-title">Add Artist</p>
+                           <p className="add-artist-button-title">Add Music</p>
                         </button>
                      </div>
                   </form>

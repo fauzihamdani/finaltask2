@@ -74,7 +74,6 @@ const AuthState = (children) => {
             type: 'LOGIN_SUCCESS',
             payload: res?.data?.data?.user,
          });
-         if (input) loadUser();
       } catch (err) {
          console.log(err);
          dispatch({

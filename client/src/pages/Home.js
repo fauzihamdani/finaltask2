@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, createRef } from 'react';
 import '../styles/index/index.css';
 import NavbarUser from '../components/navbarUser/NavbarUser';
-import coverSong from '../assets/song cover.png';
 import AuthContext from '../contexts/auth/authContext';
 import { useHistory } from 'react-router';
 import { API, setAuthToken } from '../config/api';
@@ -41,7 +40,6 @@ function Index() {
    //  =-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=
    //
    //
-
    //  Music Player onClick =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
    const onClickMusic = (mid) => {
       console.log(mid);
@@ -69,19 +67,6 @@ function Index() {
       );
       setDataTransaction(response?.data?.data?.transactions);
    };
-   //  =-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=
-   const checkIsLogin = () => {
-      loadUser();
-      if (isLogin === false) {
-         history.push('/');
-      } else if (isLogin === true) {
-         if (userData && userData?.isAdmin === false) {
-            history.push('/home');
-         } else if (userData && userData?.isAdmin === true) {
-            history.push('/transactions');
-         }
-      }
-   };
    //
    //
    //  Form Genre =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
@@ -100,7 +85,6 @@ function Index() {
    //  =-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=
    //
    //
-
    //  Get Song By Genre =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
    const getSongsByGenre = async () => {
       // alert(`${genre}`);
@@ -143,11 +127,10 @@ function Index() {
    //
 
    useEffect(() => {
-      checkIsLogin();
       getSongs();
       getTransactions();
       setLoading(false);
-   }, [isLogin, isAdmin]);
+   }, []);
 
    // useEffect(() => {
 

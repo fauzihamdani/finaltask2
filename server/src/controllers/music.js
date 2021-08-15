@@ -24,6 +24,7 @@ exports.addMusic = async (req, res) => {
          thumbnail: req.files.thumbnail[0].filename,
          artistId: req.body.artistId,
          attache: req.files.attache[0].filename,
+         genre: req.body.genre,
       });
 
       const musicWithArtist = await Music.findOne({

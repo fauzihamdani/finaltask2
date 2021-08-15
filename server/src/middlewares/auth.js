@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.authenticated = (req, res, next) => {
    let header, token;
@@ -14,7 +15,7 @@ exports.authenticated = (req, res, next) => {
    }
 
    try {
-      const secretKey = 'asdf1234';
+      const secretKey = process.env.SECRET_KEY;
 
       const verified = jwt.verify(token, secretKey);
       console.log(token);
