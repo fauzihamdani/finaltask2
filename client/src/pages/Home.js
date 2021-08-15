@@ -163,50 +163,52 @@ function Index() {
             <div className="dumb-sound-tagline">
                <p className="dumb-sound-tagline-text">Dengarkan dan Rasakan</p>
             </div>
-            <div
-               className="dumb-sound-tagline"
-               style={{
-                  fontSize: '2rem',
-                  display: 'flex',
-                  justifyContent: 'start',
+            {dataTransaction?.payment_status === 'Approved' && (
+               <div
+                  className="dumb-sound-tagline"
+                  style={{
+                     fontSize: '2rem',
+                     display: 'flex',
+                     justifyContent: 'start',
 
-                  gap: '2rem',
-                  // backgroundColor: 'red',
-               }}
-            >
-               <div>
-                  <p style={{ color: 'white' }}>Filter By Genre</p>
-               </div>
-
-               <form
-                  onSubmit={(e) => {
-                     submitGenre();
-                     e.preventDefault();
+                     gap: '2rem',
+                     // backgroundColor: 'red',
                   }}
                >
-                  <select
-                     name="genre"
-                     id="genre"
-                     className="form-design-select"
-                     onChange={(e) => {
-                        onChangeInputGenre(e);
+                  <div>
+                     <p style={{ color: 'white' }}>Filter By Genre</p>
+                  </div>
+
+                  <form
+                     onSubmit={(e) => {
+                        submitGenre();
+                        e.preventDefault();
                      }}
                   >
-                     <option value="Select Genre">Select Genre</option>
-                     <option value="Rock">Rock</option>
-                     <option value="Pop">Pop</option>
-                     <option value="Blues">Blues</option>
-                     <option value="All Music">All Music</option>
-                  </select>
-                  <div className="filter-genre-button-wrapper">
-                     <button type="submit" className="filter-genre-button">
-                        <p className="filter-genre-button-title">
-                           Filter Genre
-                        </p>
-                     </button>
-                  </div>
-               </form>
-            </div>
+                     <select
+                        name="genre"
+                        id="genre"
+                        className="form-design-select"
+                        onChange={(e) => {
+                           onChangeInputGenre(e);
+                        }}
+                     >
+                        <option value="Select Genre">Select Genre</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Pop">Pop</option>
+                        <option value="Blues">Blues</option>
+                        <option value="All Music">All Music</option>
+                     </select>
+                     <div className="filter-genre-button-wrapper">
+                        <button type="submit" className="filter-genre-button">
+                           <p className="filter-genre-button-title">
+                              Filter Genre
+                           </p>
+                        </button>
+                     </div>
+                  </form>
+               </div>
+            )}
 
             <div className="songs-wrapper">
                {isLogin ? (
