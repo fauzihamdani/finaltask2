@@ -70,6 +70,7 @@ function Index() {
    //
    //
    //  Form Genre =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
+   // bag4
    const [formGenre, setFormGenre] = useState({
       genre: '',
    });
@@ -86,6 +87,7 @@ function Index() {
    //
    //
    //  Get Song By Genre =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
+   // bag3
    const getSongsByGenre = async () => {
       // alert(`${genre}`);
       const config = {
@@ -119,7 +121,8 @@ function Index() {
    //
    //
    //  onclickGenre =-=-=-=-=-=-=-=--=-=-=-=-=-=-=
-   const submitGenre = (genre) => {
+   // bag2
+   const submitGenre = () => {
       getSongsByGenre();
    };
    //  =-=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=-=-=-=-=--=-=-=
@@ -163,6 +166,7 @@ function Index() {
             <div className="dumb-sound-tagline">
                <p className="dumb-sound-tagline-text">Dengarkan dan Rasakan</p>
             </div>
+            {/* bag1 */}
             {dataTransaction?.payment_status === 'Approved' && (
                <div
                   className="dumb-sound-tagline"
